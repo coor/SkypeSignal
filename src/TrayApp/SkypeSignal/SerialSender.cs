@@ -24,7 +24,14 @@ namespace SkypeSignal
                 _serialPort.WriteTimeout = 2500;               
 
                 //Try and open connection the serial device.
-                _serialPort.Open();
+                try
+                {
+                    _serialPort.Open();
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
                 using (_serialPort)
                 {
@@ -42,8 +49,7 @@ namespace SkypeSignal
                     MessageBoxIcon.Error
                     );
 
-                Application.Exit();
-            }
+              }
         }
 
 

@@ -33,10 +33,10 @@ namespace SkypeSignal
                 }
                 catch (Exception)
                 {                    
-                    MessageBox.Show("Cannot find a Lync client - Quitting", "Lync Client Process Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show("Cannot find a Lync client - Quitting", "Lync Client Process Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     //Quit - We cant do anything.
-                    Environment.Exit(1);
+                    //Environment.Exit(1);
                 }
 
                 if (_lyncClient != null && _lyncClient.State == ClientState.SignedIn)
@@ -84,43 +84,50 @@ namespace SkypeSignal
 
         private void SetCurrentLyncStatus()
         {
-            _lyncClient = LyncClient.GetClient();
-            
-            if (_lyncClient != null && _lyncClient.State == ClientState.SignedIn)
+            try
             {
-                var status = _lyncClient.Self.Contact.GetContactInformation(ContactInformationType.ActivityId).ToString();
+                _lyncClient = LyncClient.GetClient();
 
-                switch (status)
+                if (_lyncClient != null && _lyncClient.State == ClientState.SignedIn)
                 {
-                    case "Free":
-                        _serialSender.SendSerialData(ColourStates.Green);
-                        break;
-                    case "in-a-meeting":
-                    case "Busy":
-                        _serialSender.SendSerialData(ColourStates.Red);
-                        break;
-                    case "DoNotDisturb":
-                    case "out-of-office":
-                    case "urgent-interruptions-only":
-                    case "presenting":
-                        _serialSender.SendSerialData(ColourStates.Purple);
-                        break;
-                    case "Away":
-                    case "BeRightBack":
-                    case "off-work":
-                    case "Inactive":
-                        _serialSender.SendSerialData(ColourStates.Yellow);
-                        break;
-                    case "on-the-phone":
-                    case "in-a-conference":
-                        _serialSender.SendSerialData(ColourStates.RedFadeInACall);
-                        break;
-                    default:
-                        _serialSender.SendSerialData(ColourStates.Off);
-                        break;
+                    var status = _lyncClient.Self.Contact.GetContactInformation(ContactInformationType.ActivityId).ToString();
+
+                    switch (status)
+                    {
+                        case "Free":
+                            _serialSender.SendSerialData(ColourStates.Green);
+                            break;
+                        case "in-a-meeting":
+                        case "Busy":
+                            _serialSender.SendSerialData(ColourStates.Red);
+                            break;
+                        case "DoNotDisturb":
+                        case "out-of-office":
+                        case "urgent-interruptions-only":
+                        case "presenting":
+                            _serialSender.SendSerialData(ColourStates.Purple);
+                            break;
+                        case "Away":
+                        case "BeRightBack":
+                        case "off-work":
+                        case "Inactive":
+                            _serialSender.SendSerialData(ColourStates.Yellow);
+                            break;
+                        case "on-the-phone":
+                        case "in-a-conference":
+                            _serialSender.SendSerialData(ColourStates.RedFadeInACall);
+                            break;
+                        default:
+                            _serialSender.SendSerialData(ColourStates.Off);
+                            break;
+                    }
                 }
+                else _serialSender.SendSerialData(ColourStates.Off);
             }
-            else _serialSender.SendSerialData(ColourStates.Off);
+            catch (ClientNotFoundException ex)
+            {
+
+            }
         }
 
         
