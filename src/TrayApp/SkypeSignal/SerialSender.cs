@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace SkypeSignal
 {
-    internal class SerialSender
+    public class SerialSender : SenderBase
     {
         static SerialPort _serialPort;
 
-        public void SendSerialData(string Command)
+        public  override void SendSerialData(string Command)
         {
             try
             {
@@ -17,8 +17,8 @@ namespace SkypeSignal
                 _serialPort = new SerialPort();
 
                 //Set apporpiate Serial Settings
-                _serialPort.PortName = ConfigurationManager.AppSettings["SerialPort"];
-                _serialPort.BaudRate = getSerialBaudRate();
+                _serialPort.PortName = ConfigurationManager.AppSettings["SerialPort"] ?? "COM1";
+                _serialPort.BaudRate = int.Parse(ConfigurationManager.AppSettings["BaudRate"] ?? "9600");
 
                 //Set the read/write timeouts:
                 _serialPort.WriteTimeout = 2500;               
@@ -49,20 +49,13 @@ namespace SkypeSignal
                     MessageBoxIcon.Error
                     );
 
-              }
-        }
-
-
-        private int getSerialBaudRate()
-        {
-            int baudrate;
-
-            if(!int.TryParse(ConfigurationManager.AppSettings["BaudRate"], out baudrate))
+             }
+            finally
             {
-                baudrate = 9600;
+
+                _serialPort.Close();
             }
 
-            return baudrate;
         }
     }
 }

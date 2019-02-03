@@ -64,6 +64,7 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BTSender.cs" />
     <Compile Include="ColourStates.cs" />
     <Compile Include="ContextMenus.cs" />
     <Compile Include="FlashForm.cs">
@@ -75,6 +76,7 @@
     <Compile Include="ProcessIcon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SenderBase.cs" />
     <Compile Include="SerialSender.cs" />
     <Compile Include="SkypeStatusInfo.cs" />
     <EmbeddedResource Include="AboutForm.resx">
