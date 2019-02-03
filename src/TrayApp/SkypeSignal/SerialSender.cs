@@ -9,7 +9,12 @@ namespace SkypeSignal
     {
         static SerialPort _serialPort;
 
-        public  override void SendSerialData(string Command)
+        public override void Initialize()
+        {
+            SendVisualInitSequence();
+        }
+
+        public override void SendSerialData(string Command)
         {
             try
             {
@@ -36,7 +41,7 @@ namespace SkypeSignal
                 using (_serialPort)
                 {
                     //Fire the Serial command down to the Arduino
-                    _serialPort.WriteLine(Command);
+                    _serialPort.Write(Command);
                 }
             }
             catch (Exception Ex)

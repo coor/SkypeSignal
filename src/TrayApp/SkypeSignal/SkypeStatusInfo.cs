@@ -5,6 +5,7 @@ using System.Timers;
 using Microsoft.Lync.Model;
 using Microsoft.Lync.Model.Conversation;
 using Microsoft.Lync.Model.Conversation.AudioVideo;
+using System.IO;
 
 namespace SkypeSignal
 {
@@ -125,6 +126,10 @@ namespace SkypeSignal
                 else _serialSender.SendSerialData(ColourStates.Off);
             }
             catch (ClientNotFoundException ex)
+            {
+                _serialSender.SendSerialData(ColourStates.Off);
+            }
+            catch(FileNotFoundException ex)
             {
                 _serialSender.SendSerialData(ColourStates.Off);
             }
