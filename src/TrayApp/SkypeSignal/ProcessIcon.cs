@@ -29,6 +29,11 @@ namespace SkypeSignal
             ni.Icon = Resources.ResdevOpsSkypeSignal_Icon;
             ni.Text = "SkypeSignal Light Notification";
             ni.Visible = true;
+            //ni.BalloonTipText ="Hello World";
+            //ni.BalloonTipTitle = "Balloon Tip Title";
+            //ni.BalloonTipText = "Balloon Tip Text.";
+            //ni.BalloonTipIcon = ToolTipIcon.Error;
+            //ni.ShowBalloonTip(100000);
 
             //Attach the context menu
             ni.ContextMenuStrip = new ContextMenus().Create();
