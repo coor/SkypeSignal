@@ -126,7 +126,7 @@ namespace SkypeSignal
             }
             catch (ClientNotFoundException ex)
             {
-
+                _serialSender.SendSerialData(ColourStates.Off);
             }
         }
 
